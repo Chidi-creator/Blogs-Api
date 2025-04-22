@@ -1,0 +1,31 @@
+{
+  "name": "blogs-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "keywords": [],
+  "author": "Chidiebe-Igwe Chidiebere",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/joi": "^17.2.2",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^1.4.12",
+    "nodemon": "^3.1.9"
+  }
+}
