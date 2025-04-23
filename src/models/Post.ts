@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const PostSchma = new Schema<IPost>(
   {
     title: { type: String, required: true },
-    content: { String },
+    content: { type: String, required: true },
     imageUrl: String,
     author: {
       type: String,
@@ -15,18 +15,19 @@ const PostSchma = new Schema<IPost>(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'Category'
+      ref: "Category",
     },
-    tags: [{
+    tags: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        
-    }],
+        ref: 'Tag'
+      },
+    ],
     deletedAt: {},
   },
   { timestamps: true }
 );
 
+const Post = mongoose.model("Post", PostSchma);
 
-const Post  = mongoose.model("Post", PostSchma )
-
-export default Post
+export default Post;

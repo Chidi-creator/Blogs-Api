@@ -13,13 +13,21 @@ export default class PostHandler {
     this.postUseCase = new PostUseCase();
   }
 
-  async createPost(req: Request, res: Response) {
+  createPost = async (req: Request, res: Response) => {
     try {
       const postData: IPost = req.body;
 
       if (req.file) {
         const baseUrl = `${req.protocol}://${req.get("host")}`;
         postData.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+      }
+
+      if( req.body.Tags) {
+        const tags = Array.isArray(req.body.tags)
+        ? req.body.tags
+        : [req.body.tags]; 
+
+      postData.tags = tags.map((id: string) => new mongoose.Types.ObjectId(id));
       }
 
       const { error } = validatePost(postData);
@@ -36,9 +44,9 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async createManyPosts(req: Request, res: Response) {
+  createManyPosts = async (req: Request, res: Response) => {
     try {
       const postsData: Array<IPost> = req.body;
 
@@ -59,18 +67,18 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async findAllPosts(req: Request, res: Response) {
+  findAllPosts = async (req: Request, res: Response) => {
     try {
       const posts = await this.postUseCase.findAllPosts();
       responseManager.success(res, posts, "Posts retrieved successfully");
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async findPostById(req: Request, res: Response) {
+  findPostById = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
 
@@ -89,9 +97,9 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async updatePostById(req: Request, res: Response) {
+  updatePostById = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
       const updateData: Partial<IPost> = req.body;
@@ -115,9 +123,9 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async deletePost(req: Request, res: Response) {
+  deletePost = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
 
@@ -141,9 +149,9 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async findByQuery(req: Request, res: Response) {
+  findByQuery = async (req: Request, res: Response) => {
     try {
       const query = req.query; // Get query parameters
       const posts = await this.postUseCase.findByQuery(query);
@@ -151,9 +159,9 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-  async findPostByCategoryId(req: Request, res: Response) {
+  findPostByCategoryId = async (req: Request, res: Response) => {
     try {
       const categoryid = req.params.id;
       if (!mongoose.Types.ObjectId.isValid(categoryid)) {
@@ -171,5 +179,5 @@ export default class PostHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 }

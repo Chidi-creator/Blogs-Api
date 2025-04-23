@@ -13,7 +13,7 @@ export default class CommentHandler {
     this.commentUseCase = new CommentUseCase();
   }
 
-  async createComment(req: Request, res: Response) {
+   createComment = async(req: Request, res: Response) =>{
     try {
       const commentData: IComment = req.body;
 
@@ -32,7 +32,7 @@ export default class CommentHandler {
     }
   }
 
-  async findCommentsByPostId(req: Request, res: Response) {
+   findCommentsByPostId = async(req: Request, res: Response) =>{
     try {
       const postId = req.params.postId;
 
@@ -47,7 +47,7 @@ export default class CommentHandler {
     }
   }
 
-  async findCommentById(req: Request, res: Response) {
+   findCommentById = async(req: Request, res: Response) =>{
     try {
       const commentId = req.params.id;
 
@@ -66,7 +66,7 @@ export default class CommentHandler {
     }
   }
 
-  async updateComment(req: Request, res: Response) {
+   updateComment = async(req: Request, res: Response) => {
     try {
       const commentId = req.params.id;
       const updateData: Partial<IComment> = req.body;

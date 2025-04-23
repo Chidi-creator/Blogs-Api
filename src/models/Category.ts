@@ -14,6 +14,6 @@ const categorySchema = new Schema<ICategory>(
 );
 
 
-const Category = mongoose.model("Comment", categorySchema)
+const Category = mongoose.model("Category", categorySchema)
 
 export default Category

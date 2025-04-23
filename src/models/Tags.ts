@@ -17,6 +17,6 @@ const tagSchema = new Schema<ITag>(
 );
 
 
-const Tag = mongoose.model("Comment", tagSchema)
+const Tag = mongoose.model("Tag", tagSchema)
 
 export default Tag

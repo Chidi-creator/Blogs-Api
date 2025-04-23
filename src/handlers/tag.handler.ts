@@ -12,7 +12,7 @@ export default class TagHandler {
     this.tagUseCase = new TagUseCase();
   }
 
-  async createTag(req: Request, res: Response) {
+   createTag = async(req: Request, res: Response) =>{
     try {
       const tagData: ITag = req.body;
 
@@ -23,7 +23,7 @@ export default class TagHandler {
     }
   }
 
-  async findAllTags(req: Request, res: Response) {
+   findAllTags = async(req: Request, res: Response) => {
     try {
       const tags = await this.tagUseCase.findAllTags();
       responseManager.success(res, tags, "Tags retrieved successfully");
@@ -32,7 +32,7 @@ export default class TagHandler {
     }
   }
 
-  async findTagById(req: Request, res: Response) {
+   findTagById = async(req: Request, res: Response) =>{
     try {
       const tagId = req.params.id;
 
@@ -53,7 +53,7 @@ export default class TagHandler {
     }
   }
 
-  async updateTag(req: Request, res: Response) {
+   updateTag = async(req: Request, res: Response) => {
     try {
       const tagId = req.params.id;
       const updateData: Partial<ITag> = req.body;
@@ -76,7 +76,7 @@ export default class TagHandler {
     }
   }
 
-  async deleteTag(req: Request, res: Response) {
+   deleteTag = async(req: Request, res: Response) =>{
     try {
       const tagId = req.params.id;
 

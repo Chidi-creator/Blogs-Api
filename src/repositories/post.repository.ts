@@ -17,7 +17,8 @@ export default class PostRepository {
     try {
       const posts = await Post.find({ deletedAt: null }).sort({
         createdAt: -1,
-      }); // Descending order
+      }).populate("tags").populate("category")
+
       return posts;
     } catch (error: any) {
       throw new DatabaseError(`Error creating Post: ${error.message}`);
