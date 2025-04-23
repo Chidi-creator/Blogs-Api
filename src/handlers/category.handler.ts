@@ -31,6 +31,7 @@ export default class CategoryHandler {
         responseManager.handleError(res, error);
       }
     }
+
   
     async findCategoryById(req: Request, res: Response) {
       try {

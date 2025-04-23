@@ -19,7 +19,8 @@ export default class PostHandler {
 
       if (req.file) {
         const baseUrl = `${req.protocol}://${req.get("host")}`;
-        postData.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+       postData.imageUrl = `${baseUrl}/uploads/${encodeURIComponent(req.file.filename)}`;
+
       }
 
       if( req.body.Tags) {
@@ -80,14 +81,14 @@ export default class PostHandler {
 
   findPostById = async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const postid = req.params.postid;
 
-      if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(postid)) {
         throw new ValidationError("Invalid post ID format");
       }
 
       const post = await this.postUseCase.findPostById(
-        new mongoose.Types.ObjectId(id)
+        new mongoose.Types.ObjectId(postid)
       );
       if (!post) {
         return responseManager.notFound(res, "Post not found");
@@ -101,15 +102,15 @@ export default class PostHandler {
 
   updatePostById = async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const postid = req.params.postid;
       const updateData: Partial<IPost> = req.body;
 
-      if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(postid)) {
         throw new ValidationError("Invalid post ID format");
       }
 
       const updatedPost = await this.postUseCase.updatePostById(
-        new mongoose.Types.ObjectId(id),
+        new mongoose.Types.ObjectId(postid),
         updateData
       );
       if (!updatedPost) {
@@ -127,14 +128,14 @@ export default class PostHandler {
 
   deletePost = async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const postid = req.params.postid;
 
-      if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (!mongoose.Types.ObjectId.isValid(postid)) {
         throw new ValidationError("Invalid post ID format");
       }
 
       const deletedPost = await this.postUseCase.deletePost(
-        new mongoose.Types.ObjectId(id)
+        new mongoose.Types.ObjectId(postid)
       );
       if (!deletedPost) {
         return responseManager.notFound(res, "Post not found");

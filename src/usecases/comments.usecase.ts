@@ -17,6 +17,15 @@ export default class CommentUseCase {
     }
   }
 
+  async findAllComments(
+  ): Promise<Array<IComment>> {
+    try {
+      return await this.commentRepository.findAllComments();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async findCommentsByPostId(
     postId: mongoose.Types.ObjectId
   ): Promise<Array<IComment>> {

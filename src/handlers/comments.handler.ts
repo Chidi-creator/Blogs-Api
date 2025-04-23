@@ -13,7 +13,7 @@ export default class CommentHandler {
     this.commentUseCase = new CommentUseCase();
   }
 
-   createComment = async(req: Request, res: Response) =>{
+  createComment = async (req: Request, res: Response) => {
     try {
       const commentData: IComment = req.body;
 
@@ -30,9 +30,9 @@ export default class CommentHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-   findCommentsByPostId = async(req: Request, res: Response) =>{
+  findCommentsByPostId = async (req: Request, res: Response) => {
     try {
       const postId = req.params.postId;
 
@@ -40,14 +40,25 @@ export default class CommentHandler {
         throw new ValidationError("Invalid post ID format");
       }
 
-      const comments = await this.commentUseCase.findCommentsByPostId(new mongoose.Types.ObjectId(postId));
+      const comments = await this.commentUseCase.findCommentsByPostId(
+        new mongoose.Types.ObjectId(postId)
+      );
       responseManager.success(res, comments, "Comments retrieved successfully");
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-   findCommentById = async(req: Request, res: Response) =>{
+  findAllComments = async (req: Request, res: Response) => {
+    try {
+      const comments = await this.commentUseCase.findAllComments();
+      responseManager.success(res, comments, "Comments retrieved successfully");
+    } catch (error: any) {
+      responseManager.handleError(res, error);
+    }
+  };
+
+  findCommentById = async (req: Request, res: Response) => {
     try {
       const commentId = req.params.id;
 
@@ -55,7 +66,9 @@ export default class CommentHandler {
         throw new ValidationError("Invalid comment ID format");
       }
 
-      const comment = await this.commentUseCase.findCommentById(new mongoose.Types.ObjectId(commentId));
+      const comment = await this.commentUseCase.findCommentById(
+        new mongoose.Types.ObjectId(commentId)
+      );
       if (!comment) {
         return responseManager.notFound(res, "Comment not found");
       }
@@ -64,9 +77,9 @@ export default class CommentHandler {
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
-   updateComment = async(req: Request, res: Response) => {
+  updateComment = async (req: Request, res: Response) => {
     try {
       const commentId = req.params.id;
       const updateData: Partial<IComment> = req.body;
@@ -75,16 +88,23 @@ export default class CommentHandler {
         throw new ValidationError("Invalid comment ID format");
       }
 
-      const updatedComment = await this.commentUseCase.updateComment(new mongoose.Types.ObjectId(commentId), updateData);
+      const updatedComment = await this.commentUseCase.updateComment(
+        new mongoose.Types.ObjectId(commentId),
+        updateData
+      );
       if (!updatedComment) {
         return responseManager.notFound(res, "Comment not found");
       }
 
-      responseManager.success(res, updatedComment, "Comment updated successfully");
+      responseManager.success(
+        res,
+        updatedComment,
+        "Comment updated successfully"
+      );
     } catch (error: any) {
       responseManager.handleError(res, error);
     }
-  }
+  };
 
   async deleteComment(req: Request, res: Response) {
     try {
@@ -94,12 +114,19 @@ export default class CommentHandler {
         throw new ValidationError("Invalid comment ID format");
       }
 
-      const deletedComment = await this.commentUseCase.deleteComment(new mongoose.Types.ObjectId(commentId));
+      const deletedComment = await this.commentUseCase.deleteComment(
+        new mongoose.Types.ObjectId(commentId)
+      );
       if (!deletedComment) {
         return responseManager.notFound(res, "Comment not found");
       }
 
-      responseManager.success(res, deletedComment, "Comment deleted successfully", 204);
+      responseManager.success(
+        res,
+        deletedComment,
+        "Comment deleted successfully",
+        204
+      );
     } catch (error: any) {
       responseManager.handleError(res, error);
     }

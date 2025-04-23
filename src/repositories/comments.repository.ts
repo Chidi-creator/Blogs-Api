@@ -13,6 +13,16 @@ export default class CommentRepository {
     }
   }
 
+  async findAllComments(): Promise<Array<IComment>> {
+    try {
+      const comments = await Comment.find({}).sort({createdAt: 1});
+      return comments
+
+    } catch (error: any) {
+      throw new DatabaseError(`Error fetching comments: ${error.message}`)
+    }
+  }
+
   async findCommentsByPostId(
     postId: mongoose.Types.ObjectId
   ): Promise<IComment[]> {

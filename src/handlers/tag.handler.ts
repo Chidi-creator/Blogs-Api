@@ -34,7 +34,7 @@ export default class TagHandler {
 
    findTagById = async(req: Request, res: Response) =>{
     try {
-      const tagId = req.params.id;
+      const tagId = req.params.tagid;
 
       if (!mongoose.Types.ObjectId.isValid(tagId)) {
         throw new ValidationError("Invalid tag ID format");
@@ -55,7 +55,7 @@ export default class TagHandler {
 
    updateTag = async(req: Request, res: Response) => {
     try {
-      const tagId = req.params.id;
+      const tagId = req.params.tagid;
       const updateData: Partial<ITag> = req.body;
 
       if (!mongoose.Types.ObjectId.isValid(tagId)) {
@@ -78,7 +78,7 @@ export default class TagHandler {
 
    deleteTag = async(req: Request, res: Response) =>{
     try {
-      const tagId = req.params.id;
+      const tagId = req.params.tagid;
 
       if (!mongoose.Types.ObjectId.isValid(tagId)) {
         throw new ValidationError("Invalid tag ID format");
